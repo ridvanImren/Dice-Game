@@ -20,9 +20,10 @@ class Dice: ObservableObject, Equatable, Identifiable, Comparable {
     let row: Int
     let col: Int
     let neighbors: Int
-    var aiScore = -1
+    var aiScore = -100
+    
     static func == (lhs: Dice, rhs: Dice) -> Bool {
-        lhs.id == rhs.id
+        lhs.aiScore == rhs.aiScore
     }
     
     init(row: Int, col: Int, neighbors: Int) {

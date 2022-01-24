@@ -12,11 +12,6 @@ struct MenuView: View {
     
     var body: some View {
         VStack {
-//                Text("Start Game")
-//                    .font(.largeTitle)
-//                Text("Player vs Player")
-//                Text("Player vs AI")
-//
             
             
             Button {

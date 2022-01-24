@@ -17,7 +17,7 @@ enum Player {
         case .playerOne:
             return .blue
         case .playerTwo:
-            return .yellow
+            return .red
         }
     }
     

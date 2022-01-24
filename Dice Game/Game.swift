@@ -22,8 +22,10 @@ class Game: ObservableObject {
     
     @Published var menuChangeAmount = 1.0
     
-    var changeList = [Dice]()
+    var changeList = [Dice]() // Dice change list to update View smoothly.
     var aiCheckList = [Dice]()
+    
+    // Given row and col, countNeightbors method gives number of neighbors
     private func countNeighbors(row: Int, col:Int) -> Int {
         var result = 0
         if col > 0 {
@@ -42,6 +44,7 @@ class Game: ObservableObject {
         return result
     }
     
+    // Given row and col, getNeighborDice method gives neighbor Dices as an array.
     private func getNeighborDice(row: Int, col:Int) -> [Dice] {
         var result = [Dice]()
         if col > 0 {
@@ -111,7 +114,7 @@ class Game: ObservableObject {
             case .twoPlayer:
                 return
             case .vsAi:
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.startAiTurn()
                 }
             }
@@ -123,6 +126,7 @@ class Game: ObservableObject {
         }
     }
     
+    // increment method will be used in the view to call tapDice method. Tapping while changing animation is guarded here.
     func increment(_ dice: Dice) {
         guard state == .waiting || state == .aIthinking else { return }
         guard dice.owner == .none || dice.owner == activePlayer else { return }
@@ -148,15 +152,13 @@ class Game: ObservableObject {
     
     
     private func checkMoveAI(_ dice: Dice) {
-        guard dice.owner == .playerTwo else { return }
+        guard dice.owner != .playerOne else { return }
         aiCheckList.append(dice)
 
-        dice.aiScore = 0
-
+        
         if dice.value + 1 > dice.neighbors {
             for neighbor in getNeighborDice(row: dice.row, col: dice.col) {
                 checkMoveAI(neighbor)
-                dice.aiScore += 1
             }
         }
 
@@ -188,12 +190,46 @@ class Game: ObservableObject {
         for row in rows {
             for die in row {
                 if die.owner != .playerOne {
+                    die.aiScore = getDiceScore(die)
                     aiCheckList.append(die)
                 }
             }
         }
         
-        return aiCheckList.randomElement()
+        // If multiple dices have same score, random one is sent.
+        let aiCheckListFiltered = aiCheckList.filter { $0 == aiCheckList.sorted().first }
+        return aiCheckListFiltered.randomElement()
+    }
+    
+    private func getDiceScore(_ die: Dice) -> Int {
+        var score = 0
+        score += (die.value - die.neighbors + 2) * 3
+        
+        let dice = getNeighborDice(row: die.row, col: die.col)
+        
+        
+        for die in dice {
+            
+            if die.owner == .playerTwo {
+                score -= 1
+            }
+        }
+
+        
+        if die.value + 1 > die.neighbors {
+            score += 5
+            
+            
+            for die in dice {
+                
+                if die.owner == .playerOne {
+                    score += die.value/2
+                }
+            }
+            
+        }
+
+        return score
     }
     
     private func startAiTurn() {

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GameView: View {
-//    @StateObject private var game = Game(numRows: 8, numCols: 11)
     @StateObject private var game = Game(numRows: 8, numCols: 5)
 
     var body: some View {
@@ -53,7 +52,7 @@ struct GameView: View {
                 Text("Blue: \(game.playerOneScore)")
                     .foregroundColor(game.activePlayer == .playerOne ? Player.playerOne.color : Color(white: 0.7))
                     .font(.headline)
-                Text("Yellow: \(game.playerTwoScore)")
+                Text("Red: \(game.playerTwoScore)")
                     .foregroundColor(game.activePlayer == .playerTwo ? Player.playerTwo.color : Color(white: 0.7))
                     .font(.headline)
             }
