@@ -20,7 +20,7 @@ struct MenuView: View {
                 Text("Player vs Player")
                     .font(.largeTitle)
                     .frame(maxWidth: .infinity)
-                    .background(LinearGradient(gradient: Gradient(colors: [.white, .red, .white, .red, .white]), startPoint: .leading, endPoint: .trailing))
+                    .background(LinearGradient(gradient: Gradient(colors: [.purple,.white, .purple]), startPoint: .leading, endPoint: .trailing))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth:1))
                     
@@ -32,7 +32,7 @@ struct MenuView: View {
                 Text("Player vs AI")
                     .font(.largeTitle)
                     .frame(maxWidth: .infinity)
-                    .background(LinearGradient(gradient: Gradient(colors: [.white, .red, .white, .red, .white]), startPoint: .leading, endPoint: .trailing))
+                    .background(LinearGradient(gradient: Gradient(colors: [.purple,.white, .purple]), startPoint: .leading, endPoint: .trailing))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth:1))
 
@@ -41,7 +41,7 @@ struct MenuView: View {
                 
         }
         .padding()
-        .background(LinearGradient(gradient: Gradient(colors: [.black, .red, .white, .red, .black]), startPoint: .leading, endPoint: .trailing))
+        .background(LinearGradient(gradient: Gradient(colors: [.black, .purple, .purple, .black]), startPoint: .leading, endPoint: .trailing))
         .clipShape(
         RoundedRectangle(cornerRadius: 15)
         )
